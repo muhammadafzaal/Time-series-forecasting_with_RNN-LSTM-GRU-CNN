@@ -1,4 +1,3 @@
-# data: https://download.pytorch.org/tutorial/data.zip
 import io
 import os
 import unicodedata
@@ -12,7 +11,7 @@ import random
 ALL_LETTERS = string.ascii_letters + " .,;'"
 N_LETTERS = len(ALL_LETTERS)
 
-# Turn a Unicode string to plain ASCII, thanks to https://stackoverflow.com/a/518232/2809427
+# Turn a Unicode string to plain ASCII
 def unicode_to_ascii(s):
     return ''.join(
         c for c in unicodedata.normalize('NFD', s)
@@ -42,19 +41,6 @@ def load_data():
         
     return category_lines, all_categories
 
-
-
-"""
-To represent a single letter, we use a “one-hot vector” of 
-size <1 x n_letters>. A one-hot vector is filled with 0s
-except for a 1 at index of the current letter, e.g. "b" = <0 1 0 0 0 ...>.
-
-To make a word we join a bunch of those into a
-2D matrix <line_length x 1 x n_letters>.
-
-That extra 1 dimension is because PyTorch assumes
-everything is in batches - we’re just using a batch size of 1 here.
-"""
 
 # Find letter index from all_letters, e.g. "a" = 0
 def letter_to_index(letter):
@@ -87,14 +73,3 @@ def random_training_example(category_lines, all_categories):
     line_tensor = line_to_tensor(line)
     return category, line, category_tensor, line_tensor
 
-
-
-if __name__ == '__main__':
-    #print(ALL_LETTERS)
-    #print(unicode_to_ascii('Ślusàrski'))
-    
-    category_lines, all_categories = load_data()
-    #print(category_lines['Italian'][:5])
-    
-    #print(letter_to_tensor('J')) # [1, 57]
-    #print(line_to_tensor('Jones')) # [5, 1, 57]
